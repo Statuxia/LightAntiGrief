@@ -1,0 +1,18 @@
+name: LightAntiGrief
+version: '${version}'
+main: me.statuxia.lightantigrief.LightAntiGrief
+api-version: '1.20'
+depend: [CoreProtect]
+
+
+permissions:
+  lag.moder:
+    description: "Server Moderator"
+
+commands:
+  tpworld:
+    permission: lag.moder
+    description: "Teleport for moderators"
+  marktrusted:
+    permission: lag.moder
+    description: "Mark player as trusted"
