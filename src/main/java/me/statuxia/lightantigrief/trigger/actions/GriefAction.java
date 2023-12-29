@@ -7,7 +7,7 @@ import static me.statuxia.lightantigrief.config.LAGConfig.*;
 
 public enum GriefAction {
 
-    FIRE_CHARGE(getFireCharge(), Component.text(" sets ")),
+    FIRE_CHARGE(getFireCharge(), Component.text(" sets the fire on ")),
     GET_ITEM(getGetItem(), Component.text(" took ")),
     PUT_ITEM(getPutItem(), Component.text(" put ")),
     BREAK_BLOCK(getBreakBlock(), Component.text(" broke ")),
