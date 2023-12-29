@@ -1,5 +1,6 @@
 package me.statuxia.lightantigrief.trigger;
 
+import me.statuxia.lightantigrief.config.LAGConfig;
 import me.statuxia.lightantigrief.trigger.actions.GriefAction;
 
 import java.util.HashMap;
@@ -23,6 +24,6 @@ public record BufferTrigger(UUID playerUUID, GriefAction action) {
 
     public static boolean isLimitReached(BufferTrigger buffer) {
         Trigger trigger = BUFFER.getOrDefault(buffer, new Trigger(buffer));
-        return trigger.getTotalTriggered() >= buffer.action.getLimitTriggers() + ThreadLocalRandom.current().nextInt(7);
+        return trigger.getTotalTriggered() >= buffer.action.getLimitTriggers() + (LAGConfig.getTriggerRandomBonus() ? ThreadLocalRandom.current().nextInt(7) : 0);
     }
 }

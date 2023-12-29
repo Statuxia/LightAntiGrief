@@ -102,4 +102,11 @@ public class LAGConfig {
         }
         return manager.getJsonObject().optString("banReason", "You have been banned for suspected griefing");
     }
+
+    public static boolean getTriggerRandomBonus() {
+        if (manager == null) {
+            getConfig();
+        }
+        return manager.getJsonObject().optBoolean("triggerRandomBonus", true);
+    }
 }
