@@ -45,7 +45,7 @@ banReason | "You have been banned for suspected griefing" | Ban reason
 </div>
 
 <div id="commands">
-    <h2>Configuration</h2>
+    <h2>Commands</h2>
   
 Command | Permission | Action
 --- | --- | ---
