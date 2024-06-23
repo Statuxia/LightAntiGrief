@@ -1,4 +1,5 @@
 name: LightAntiGrief
+author: 'Statuxia'
 version: '${version}'
 main: me.statuxia.lightantigrief.LightAntiGrief
 api-version: '1.20'

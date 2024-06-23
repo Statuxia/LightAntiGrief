@@ -19,6 +19,7 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
+import java.util.logging.Level;
 
 public final class LightAntiGrief extends JavaPlugin {
 
@@ -73,12 +74,12 @@ public final class LightAntiGrief extends JavaPlugin {
         INSTANCE = this;
         coreProtectAPI = getCoreProtect();
         if (coreProtectAPI == null) {
-            System.out.println("CoreProtect not found. Are you using CoreProtect v21.0+?");
+            log("CoreProtect not found. Are you using CoreProtect v21.0+?", Level.WARNING);
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
 
-        System.out.println("It is not recommended to use at the beginning of the game. It is advisable to wait 2-3 days irl");
+        log("It is not recommended to use at the beginning of the game. It is advisable to wait 2-3 days irl", Level.WARNING);
 
         Bukkit.getOnlinePlayers().forEach(player -> {
             if (player.hasPermission("lag.moder")) {
@@ -113,7 +114,15 @@ public final class LightAntiGrief extends JavaPlugin {
             return null;
         }
 
-        System.out.println("CoreProtect Loaded");
+        log("CoreProtect Loaded");
         return CoreProtect;
+    }
+
+    public static void log(String message) {
+        log(message, Level.INFO);
+    }
+
+    public static void log(String message, Level level) {
+        Bukkit.getLogger().log(level, "[LAG] " + message);
     }
 }
