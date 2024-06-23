@@ -196,7 +196,7 @@ public class GriefListener implements Listener {
         }
 
         if (isEntityHolder(clickedInventory.getHolder())) {
-            if ((event.getAction() == InventoryAction.PLACE_ALL || event.getAction() == InventoryAction.PLACE_ONE || event.getAction() == InventoryAction.PLACE_SOME)) {
+            if (isPlacing(event)) {
                 checkForTrigger(event, location, player, GriefAction.PUT_ITEM);
                 return;
             }
@@ -205,28 +205,24 @@ public class GriefListener implements Listener {
         }
 
         Block block = location.getBlock();
-        if (!blockTriggers.contains(block.getType())) {
+        if (!blockTriggers.contains(block.getType()) || isPlacing(event)) {
             return;
         }
 
-        if (IdentifyUtils.isOwner(block, player)) {
+        String ownerName = IdentifyUtils.getOwner(block);
+        if (ownerName.equals(player.getName())) {
             return;
         }
-        AtomicBoolean isNearOwner = new AtomicBoolean(false);
-        player.getNearbyEntities(20, 20, 20).forEach(entity -> {
-            if (entity instanceof Player nearPlayer) {
-                if (IdentifyUtils.isOwner(block, nearPlayer)) {
-                    isNearOwner.set(true);
-                }
-            }
-        });
-        if (isNearOwner.get()) {
+        Player owner = Bukkit.getPlayer(ownerName);
+        if (player.getNearbyEntities(20, 20, 20).contains(owner)) {
             return;
         }
-        if ((event.getAction() == InventoryAction.PLACE_ALL || event.getAction() == InventoryAction.PLACE_ONE || event.getAction() == InventoryAction.PLACE_SOME)) {
-            return;
-        }
+
         checkForTrigger(event, location, player, GriefAction.GET_ITEM);
+    }
+
+    private static boolean isPlacing(InventoryClickEvent event) {
+        return event.getAction() == InventoryAction.PLACE_ALL || event.getAction() == InventoryAction.PLACE_ONE || event.getAction() == InventoryAction.PLACE_SOME;
     }
 
     private boolean isEntityHolder(InventoryHolder holder) {
@@ -276,21 +272,14 @@ public class GriefListener implements Listener {
             return;
         }
 
-        if (IdentifyUtils.isOwner(block, player)) {
+        String ownerName = IdentifyUtils.getOwner(block);
+        if (ownerName.equals(player.getName())) {
             return;
         }
-        AtomicBoolean isNearOwner = new AtomicBoolean(false);
-        player.getNearbyEntities(20, 20, 20).forEach(entity -> {
-            if (entity instanceof Player nearPlayer) {
-                if (IdentifyUtils.isOwner(block, nearPlayer)) {
-                    isNearOwner.set(true);
-                }
-            }
-        });
-        if (isNearOwner.get()) {
+        Player owner = Bukkit.getPlayer(ownerName);
+        if (player.getNearbyEntities(20, 20, 20).contains(owner)) {
             return;
         }
-
 
         Component component = MessageUtils.generateMessage(player, block.getLocation(), GriefAction.BREAK_BLOCK, block.getType());
         Bukkit.getLogger().info(MessageUtils.plainText(component).replaceAll("§[0-9abcdefkmonlr]", ""));
